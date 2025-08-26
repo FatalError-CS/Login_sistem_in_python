@@ -2,53 +2,46 @@ import subprocess
 import time
 import json
 import sys
-
-def ler_valor_nao_vazio(usuário_variavel):
-    valor_lido = input(f'\nEntre com o nome de {usuário_variavel}: ')
-    while valor_lido == '':
-        print(f'\nO nome de {usuário_variavel} não pode ser vazio!')
-        valor_lido = input(f'\nEntre com o nome de {usuário_variavel}: ')
-    return valor_lido
-
-def ler_valor_de_senha(senha_variavel):
-    valor_lido = input(f'\nEntre com a {senha_variavel} de usuário: ')
-    while valor_lido == '':
-        print(f'\nA {senha_variavel} não pode ser vazia!')
-        valor_lido = input(f'\nEntre com a {senha_variavel} de usuário: ')
-    return valor_lido
-
-def carregar():
-    pontos = ['.', '.', '.']
-    for ponto in pontos:
-        sys.stdout.write(ponto)
+def  read_non_empty_value(user_variable):
+    read_value = input(f'\nEnter the name of {user_variable}: ')
+    while read_value == '':
+        print(f'\nThe name of {user_variable} cannot be empty!')
+        read_value = input(f'\nEnter the name of {user_variable}: ')
+    return read_value
+def  read_password_value(variable_password):
+    read_value = input(f'\nEnter the users {variable_password}: ')
+    while read_value == '':
+        print(f'\n{variable_password} cannot be empty!')
+        read_value = input(f'\nEnter the users {variable_password}: ')
+    return read_value
+def loading():
+    dots = ['.', '.', '.']
+    for dot in dots:
+        sys.stdout.write(dot)
         sys.stdout.flush()
         time.sleep(1)
-
-def verificar_login(lista_usuarios):
-    usuario = ler_valor_nao_vazio('usuário')
-    senha = ler_valor_de_senha('senha')
-    for conta in lista_usuarios:
-        if conta['usuário'] == usuario and conta['senha'] == senha:
+def  check_login(user_list):
+    user =  read_non_empty_value('user')
+    password =  read_password_value('password')
+    for account in user_list:
+        if account['user'] == user and account['password'] == password:
             print('______________________________')
-            print('\nLogin bem-sucedido!\n\nRedirecionando', end='')
-            carregar()
+            print('\nLogin successful!\n\nRedirecting', end='')
+            loading()
             return True
     print('______________________________')
-    print("\nErro: Nome de usuário ou senha incorretos!\n\nTente novamente")
+    print("\nErro:Incorrect username or password!\n\nTry again")
     print('______________________________\n')
     return False
-    
-def ler_json():
-    with open("contas.json", "r") as meu_arquivo:
-        lista_usuarios = json.load(meu_arquivo)
-    return lista_usuarios
-
+def read-json():
+    with open("accounts.json", "r") as  my_file:
+        user_list = json.load( my_file)
+    return user_list
 def login():
-    lista_usuarios = ler_json()
+    user_list = read-json()
     while True:
-        usuario_logado = verificar_login(lista_usuarios)
-        if usuario_logado:
-            subprocess.run(["python", "MenuPrincipal.py"])
-            return usuario_logado
-
-usuario_logado = login()
+        user_logged =  check_login(user_list)
+        if user_logged:
+            subprocess.run(["python", "MainMenu.py"])
+            return user_logged
+user_logged = login()
